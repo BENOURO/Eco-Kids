@@ -15,6 +15,16 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  static String _requiredEnv(String key) {
+    const value = String.fromEnvironment(key);
+    if (value.isEmpty) {
+      throw StateError(
+        'Missing Firebase config: pass --dart-define=$key=... when running or building.',
+      );
+    }
+    return value;
+  }
+
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
@@ -40,8 +50,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAZkRQaFvXQUDS8grFiVLa-mAEi-GCDsn4',
+  static FirebaseOptions get web => FirebaseOptions(
+    apiKey: _requiredEnv('FIREBASE_WEB_API_KEY'),
     appId: '1:764377900879:web:d2ddb6b4cb70199c73073a',
     messagingSenderId: '764377900879',
     projectId: 'ecokids-b6969',
@@ -49,16 +59,16 @@ class DefaultFirebaseOptions {
     storageBucket: 'ecokids-b6969.firebasestorage.app',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCJXIO340Io35IJ4TDJI4bSLps8Ev2hBn4',
+  static FirebaseOptions get android => FirebaseOptions(
+    apiKey: _requiredEnv('FIREBASE_ANDROID_API_KEY'),
     appId: '1:764377900879:android:62f14e3b463fa31573073a',
     messagingSenderId: '764377900879',
     projectId: 'ecokids-b6969',
     storageBucket: 'ecokids-b6969.firebasestorage.app',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCvbzfB4JJnIU14v6WCp7tXWtQ7-EME2nc',
+  static FirebaseOptions get ios => FirebaseOptions(
+    apiKey: _requiredEnv('FIREBASE_IOS_API_KEY'),
     appId: '1:764377900879:ios:3e95abc1b9dca92d73073a',
     messagingSenderId: '764377900879',
     projectId: 'ecokids-b6969',
@@ -66,8 +76,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.ecokids',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCvbzfB4JJnIU14v6WCp7tXWtQ7-EME2nc',
+  static FirebaseOptions get macos => FirebaseOptions(
+    apiKey: _requiredEnv('FIREBASE_IOS_API_KEY'),
     appId: '1:764377900879:ios:3e95abc1b9dca92d73073a',
     messagingSenderId: '764377900879',
     projectId: 'ecokids-b6969',
@@ -75,8 +85,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.ecokids',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAZkRQaFvXQUDS8grFiVLa-mAEi-GCDsn4',
+  static FirebaseOptions get windows => FirebaseOptions(
+    apiKey: _requiredEnv('FIREBASE_WEB_API_KEY'),
     appId: '1:764377900879:web:4db59a5878e5b43f73073a',
     messagingSenderId: '764377900879',
     projectId: 'ecokids-b6969',
